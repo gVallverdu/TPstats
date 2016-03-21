@@ -1,0 +1,31 @@
+{% extends 'collectDatas/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Add a new experiment</h1>
+
+        <a href="{% url 'home' %}">
+            <button type="button" class="btn btn-default" aria-label="Home">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                Home
+            </button>
+        </a>
+        {% if exp %}
+        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Remove">
+                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
+                Data
+            </button>
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <form method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

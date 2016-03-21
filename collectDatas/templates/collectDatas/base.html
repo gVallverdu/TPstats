@@ -1,0 +1,47 @@
+{% load staticfiles %} <!-- pour lui dire de charger les css, img ... -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head
+    content must come *after* these tags -->
+    <meta name="description" content="Glassware accuracy">
+    <meta name="author" content="Germain Salvato Vallverdu">
+    <!-- <link rel="icon" href="../../favicon.ico"> -->
+
+    <title>Experiments</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <!-- Bootstrap theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+
+  </head>
+  <body>
+    <div class="container-fluid">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="http://www.univ-pau.fr"><img src="{% static 'img/logoUPPA.png' %}" height="64px" alt="UPPA" /></a>
+                <a href="http://iprem.univ-pau.fr"><img src="{% static 'img/logoIPREM.png' %}" height="64px" alt="IPREM" /></a>
+            </div>
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+            Contact: germain dot vallverdu at univ-pau.fr
+        </div>
+    </footer>
+  </body>
+</html>

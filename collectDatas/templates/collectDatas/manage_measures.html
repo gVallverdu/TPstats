@@ -1,0 +1,47 @@
+{% extends 'collectDatas/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{ exp.name }}</h1>
+        <h3>{{ exp.date }}</h3>
+
+        <a href="{% url 'home' %}">
+            <button type="button" class="btn btn-default" aria-label="Home">
+                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                Home
+            </button>
+        </a>
+        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Remove">
+                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
+                Back to data
+            </button>
+        </a>
+    </div>
+    <p>Click on the values you want to delete.</p>
+    <div class="row">
+        {% for glassware, measures in datas.items %}
+            <div class="col-md-4">
+                <div class="pull-right">
+                    <a href="{% url 'new_measure' exp_id=exp.pk glass_id=glassware.pk %}">
+                        <button type="button" class="btn btn-default" aria-label="New">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                            New measure
+                        </button>
+                    </a>
+                </div>
+                <h4>{{ glassware.get_glassware_display }}</h4>
+
+                <div class="list-group">
+                    {% for measure in measures %}
+                        <a href="{% url 'delete_measure' measure_id=measure.pk %}" class="list-group-item">
+                            <span class="label label-danger pull-right">Delete</span>
+                            <span class="pull-right" style="padding-right:10px;"> {{ measure.measure_date }} </span>
+                            {{ measure.fmt_value }} mL
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

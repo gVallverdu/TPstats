@@ -1,0 +1,27 @@
+{% extends 'collectDatas/base.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{{ exp.name }}</h1>
+        <h3>{{ exp.date }}</h3>
+
+        <a href="{% url 'manage_measures' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Remove">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                back to experiment datas
+            </button>
+        </a>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">New measure for {{ glassware.get_glassware_display }}</h3>
+        </div>
+        <div class="panel-body">
+            <form method="POST" class="post-form">{% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="save btn btn-default">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
