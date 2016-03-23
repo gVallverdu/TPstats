@@ -12,7 +12,6 @@ urlpatterns = [
     url(r'^experiment/image/(?P<exp_id>\d+)$', views.plot_experiment, name="plot_experiment"),
     url(r'^experiment/downloadplot/(?P<exp_id>\d+)$',
         views.download_plot_experiment, name="download_plot_experiment"),
-
     # measures
     url(r'^measures/manage/(?P<exp_id>\d+)$', views.manage_measures, name="manage_measures"),
     url(r'^measure/new/exp(?P<exp_id>\d+)/glassware(?P<glass_id>\d+)$',

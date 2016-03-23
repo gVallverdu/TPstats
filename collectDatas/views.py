@@ -1,12 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import View
+from django.contrib.auth.decorators import login_required
 from . import models
 from . import forms
 
 import pandas as pd
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.backends.backend_agg import FigureCanvasAgg
+from matplotlib.backends.backend_pdf import FigureCanvasPdf
 from . import plot
 # Create your views here.
 
@@ -34,6 +36,7 @@ def home(request):
     return render(request, 'collectDatas/home.html', {"exps": exps})
 
 
+@login_required
 def new_experiment(request):
     if request.method == "POST":
         form = forms.ExperimentForm(request.POST)
@@ -43,6 +46,13 @@ def new_experiment(request):
     else:
         form = forms.ExperimentForm()
     return render(request, "collectDatas/new_exp.html", {"form": form})
+
+
+@login_required
+def delete_experiment(request, exp_id):
+    exp = get_object_or_404(models.Experiment, pk=exp_id)
+    exp.delete()
+    return redirect("collectDatas.views.home")
 
 
 def edit_experiment(request, exp_id):
@@ -104,7 +114,7 @@ def plot_experiment(request, exp_id):
     ax = fig.add_subplot(111)
     ax = plot.make_box_plot(ax, data)
 
-    canvas = FigureCanvas(fig)
+    canvas = FigureCanvasAgg(fig)
     response = HttpResponse(content_type='image/png')
     canvas.print_png(response)
     return response
@@ -120,8 +130,10 @@ def download_plot_experiment(request, exp_id):
 
     filename = "%s.pdf" % exp.name.replace(" ", "_")
 
-    response = HttpResponse(fig.savefig(filename, format="pdf"), content_type='application/pdf')
+    canvas = FigureCanvasPdf(fig)
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    canvas.print_pdf(response)
     return response
 
 
@@ -140,12 +152,6 @@ def download_exp_data(request, exp_id):
     response['Content-Disposition'] = 'attachment; filename="%s.csv"' % exp.name.replace(" ", "_")
 
     return response
-
-
-def delete_experiment(request, exp_id):
-    exp = get_object_or_404(models.Experiment, pk=exp_id)
-    exp.delete()
-    return redirect("collectDatas.views.home")
 
 
 def manage_measures(request, exp_id):
