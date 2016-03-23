@@ -23,30 +23,39 @@
                 Delete
             </button>
         </a>
+        <a href="{% url 'manage_measures' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Manage">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                Manage measures
+            </button>
+        </a>
+        <a href="{% url 'download_exp_data' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Remove">
+                Download data in CSV format
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+            </button>
+        </a>
+        <a href="{% url 'download_plot_experiment' exp_id=exp.pk %}">
+            <button type="button" class="btn btn-default" aria-label="Remove">
+                Download a pdf of the plot
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+            </button>
+        </a>
     </div>
 
     <div class="panel panel-default">
         <div class="panel-heading"><h5>Description</h5></div>
         <div class="panel-body">
-            <p> {{ exp.description }}</p>
-
-            <a href="{% url 'download_exp_data' exp_id=exp.pk %}">
-                <button type="button" class="btn btn-default" aria-label="Remove">
-                    Download data in CSV format
-                    <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
-                </button>
-            </a>
-        </div>
-        <div class="panel-heading clearfix">
             <div class="pull-right">
-                <a href="{% url 'manage_measures' exp_id=exp.pk %}">
-                    <button type="button" class="btn btn-default" aria-label="Manage">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                        Manage measures
-                    </button>
-                </a>
+                <img src="{% url 'plot_experiment' exp_id=exp.pk %}" class="media-object"/>
             </div>
-            <h5>Datas</h5>
+
+            <p>{{ exp.description }}</p>
+
+
+        </div>
+        <div class="panel-heading">
+            <h5>Measures</h5>
         </div>
         <div class="panel-body">
             {{ htmldata | safe }}

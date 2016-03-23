@@ -20,7 +20,7 @@
     </div>
     <p>Click on the values you want to delete.</p>
     <div class="row">
-        {% for glassware, measures in datas.items %}
+        {% for glassware, measures in data.items %}
             <div class="col-md-4">
                 <div class="pull-right">
                     <a href="{% url 'new_measure' exp_id=exp.pk glass_id=glassware.pk %}">

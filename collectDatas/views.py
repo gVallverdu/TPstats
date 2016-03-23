@@ -5,7 +5,28 @@ from . import models
 from . import forms
 
 import pandas as pd
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from . import plot
 # Create your views here.
+
+# shortcuts
+
+
+def gather_measures(exp):
+    """ gather all measures of one experiments and return a dict """
+    glasswares = models.Glassware.objects.all()
+
+    # collect datas from database
+    data = dict()
+    ndatamax = -1
+    for g in glasswares:
+        measures = models.Measure.objects.filter(experiment=exp, glassware=g)
+        if len(measures) != 0:
+            ndatamax = max(len(measures), ndatamax)
+            data[g.get_glassware_display()] = [m.value for m in measures]
+
+    return data, ndatamax
 
 
 def home(request):
@@ -39,16 +60,7 @@ def edit_experiment(request, exp_id):
 
 def detail_experiment(request, exp_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
-    glasswares = models.Glassware.objects.all()
-
-    # collect datas from database
-    data = dict()
-    ndatamax = 0
-    for g in glasswares:
-        measures = models.Measure.objects.filter(experiment=exp, glassware=g)
-        if len(measures) != 0:
-            ndatamax = max(len(measures), ndatamax)
-            data[g.get_glassware_display()] = [m.value for m in measures]
+    data, ndatamax = gather_measures(exp)
 
     # add needed values to have homogeneous lengths
     for glassware, measures in data.items():
@@ -84,18 +96,38 @@ def detail_experiment(request, exp_id):
     return render(request, 'collectDatas/experiment.html', context)
 
 
+def plot_experiment(request, exp_id):
+    exp = get_object_or_404(models.Experiment, pk=exp_id)
+    data, ndatamax = gather_measures(exp)
+
+    fig = plt.Figure()
+    ax = fig.add_subplot(111)
+    ax = plot.make_box_plot(ax, data)
+
+    canvas = FigureCanvas(fig)
+    response = HttpResponse(content_type='image/png')
+    canvas.print_png(response)
+    return response
+
+
+def download_plot_experiment(request, exp_id):
+    exp = get_object_or_404(models.Experiment, pk=exp_id)
+    data, ndatamax = gather_measures(exp)
+
+    fig = plt.Figure()
+    ax = fig.add_subplot(111)
+    ax = plot.make_box_plot(ax, data)
+
+    filename = "%s.pdf" % exp.name.replace(" ", "_")
+
+    response = HttpResponse(fig.savefig(filename, format="pdf"), content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    return response
+
+
 def download_exp_data(request, exp_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
-    glasswares = models.Glassware.objects.all()
-
-    # collect datas from database
-    data = dict()
-    ndatamax = 0
-    for g in glasswares:
-        measures = models.Measure.objects.filter(experiment=exp, glassware=g)
-        if len(measures) != 0:
-            ndatamax = max(len(measures), ndatamax)
-            data[g.get_glassware_display()] = [m.value for m in measures]
+    data, ndatamax = gather_measures(exp)
 
     # add needed values to have homogeneous lengths
     for glassware, measures in data.items():
@@ -121,11 +153,11 @@ def manage_measures(request, exp_id):
     glasswares = models.Glassware.objects.all()
 
     # collect datas from database
-    datas = dict()
+    data = dict()
     for glassware in glasswares:
         measures = models.Measure.objects.filter(experiment=exp, glassware=glassware)
         if len(measures) != 0:
-            datas[glassware] = measures.order_by("-date")
+            data[glassware] = measures.order_by("-date")
 
     if request.method == "POST":
         return redirect("collectDatas.views.detail_experiment", exp_id=exp_id)
@@ -133,7 +165,7 @@ def manage_measures(request, exp_id):
     else:
         # add needed values to have homogeneous lengths
 
-        context = {"exp": exp, "datas": datas}
+        context = {"exp": exp, "data": data}
     return render(request, 'collectDatas/manage_measures.html', context)
 
 
