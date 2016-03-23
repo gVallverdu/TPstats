@@ -18,7 +18,12 @@
             </button>
         </a>
     </div>
-    <p>Click on the values you want to delete.</p>
+
+    <div class="alert alert-danger" role="alert">
+    <p>WARNINGS : Click only on the values you want to delete. To see all measures,
+        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">go back to the experiement page</a>.</p>
+    </div>
+
     <div class="row">
         {% for glassware, measures in data.items %}
             <div class="col-md-4">

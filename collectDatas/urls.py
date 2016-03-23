@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^measure/new/exp(?P<exp_id>\d+)/glassware(?P<glass_id>\d+)$',
         views.new_measure, name="new_measure"),
     url(r'^measure/delete/(?P<measure_id>\d+)$', views.delete_measure, name="delete_measure"),
+    # login
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
 ]
