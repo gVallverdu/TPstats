@@ -164,6 +164,8 @@ def manage_measures(request, exp_id):
         measures = models.Measure.objects.filter(experiment=exp, glassware=glassware)
         if len(measures) != 0:
             data[glassware] = measures.order_by("-date")
+        else:
+            glasswares.remove(glassware)
 
     if request.method == "POST":
         return redirect("collectDatas.views.detail_experiment", exp_id=exp_id)
@@ -171,7 +173,7 @@ def manage_measures(request, exp_id):
     else:
         # add needed values to have homogeneous lengths
 
-        context = {"exp": exp, "data": data}
+        context = {"exp": exp, "data": data, "glasswares": glasswares}
     return render(request, 'collectDatas/manage_measures.html', context)
 
 
