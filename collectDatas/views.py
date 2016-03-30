@@ -32,7 +32,7 @@ def gather_measures(exp):
 
 
 def home(request):
-    exps = models.Experiment.objects.all()
+    exps = models.Experiment.objects.all().order_by("-date")
     return render(request, 'collectDatas/home.html', {"exps": exps})
 
 
@@ -106,13 +106,16 @@ def detail_experiment(request, exp_id):
     return render(request, 'collectDatas/experiment.html', context)
 
 
-def plot_experiment(request, exp_id):
+def plot_experiment(request, exp_id, plottype="box"):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     data, ndatamax = gather_measures(exp)
 
     fig = plt.Figure()
-    #ax = fig.add_subplot(111)
-    fig = plot.make_hist_plot(fig, data)
+    if plottype == "box":
+        ax = fig.add_subplot(111)
+        ax = plot.make_box_plot(ax, data)
+    else:
+        fig = plot.make_hist_plot(fig, data)
 
     canvas = FigureCanvasAgg(fig)
     response = HttpResponse(content_type='image/png')
@@ -120,13 +123,16 @@ def plot_experiment(request, exp_id):
     return response
 
 
-def download_plot_experiment(request, exp_id):
+def download_plot_experiment(request, exp_id, plottype="box"):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     data, ndatamax = gather_measures(exp)
 
     fig = plt.Figure()
-    ax = fig.add_subplot(111)
-    ax = plot.make_box_plot(ax, data)
+    if plottype == "box":
+        ax = fig.add_subplot(111)
+        ax = plot.make_box_plot(ax, data)
+    else:
+        fig = plot.make_hist_plot(fig, data)
 
     filename = "%s.pdf" % exp.name.replace(" ", "_")
 

@@ -25,35 +25,12 @@
                 <a href="{% url 'detail_experiment' exp_id=exp.pk %}" class="list-group-item">
                     <h4 class="list-group-item-heading">{{ exp.name }} <small>{{ exp.date }}</small></h4>
                     <p>
-                        <img src="{% url 'plot_experiment' exp_id=exp.pk %}" class="img-rounded img-responsive"/>
+                        <img src="{% url 'plot_experiment' exp_id=exp.pk plottype='box'%}" class="img-rounded img-responsive"/>
                     </p>
                 </a>
             </div>
         </div>
     {% endfor %}
 </div>
-
-<!-- <div class="row">
-    {% for exp in exps %}
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="pull-right">
-                        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
-                            <button type="button" class="btn btn-default" aria-label="Remove">
-                                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
-                                Data
-                            </button>
-                        </a>
-                    </div>
-                    <h4>{{ exp.name }} <small>{{ exp.date }}</small></h4>
-                </div>
-                <div class="panel-body">
-                    <img src="{% url 'plot_experiment' exp_id=exp.pk %}" class="img-responsive"/>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
-</div> -->
 
 {% endblock %}
