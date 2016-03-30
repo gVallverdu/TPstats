@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-import locale
-
 # Create your models here.
 GLASSWARE_CHOICE = (
     ("BE", "Becher"),
@@ -14,7 +12,8 @@ GLASSWARE_CHOICE = (
 
 
 class Experiment(models.Model):
-    defaultName = "TP " + timezone.now().strftime(locale.nl_langinfo(locale.D_FMT))
+    defaultName = "TP " + timezone.now().strftime("%x %X")
+
     name = models.CharField(max_length=100,
                             default=defaultName)
     date = models.DateField(null=True, default=timezone.now)

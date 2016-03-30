@@ -38,14 +38,6 @@
     <div class="row">
         {% for glassware, measures in data.items %}
             <div class="col-md-4">
-                <!-- <div class="pull-right">
-                    <a href="{% url 'new_measure' exp_id=exp.pk glass_id=glassware.pk %}">
-                        <button type="button" class="btn btn-default" aria-label="New">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            New measure
-                        </button>
-                    </a>
-                </div> -->
                 <h4>{{ glassware.get_glassware_display }}</h4>
 
                 <div class="list-group">
