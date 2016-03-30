@@ -52,20 +52,33 @@
 
     <footer class="footer">
         <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-xs-6">
+                    <script type=text/javascript>
+                        var a = "germain";
+                        var b = "univ-pau.fr";
+                        var c = "subject=Contact";
+                        document.write('<a href="mailto:' + a + '@' + b + ' ?' + c + '">');
+                        document.write("<span class='glyphicon glyphicon-envelope' aria-hidden='true'></span>");
+                        document.write(" <img src='{% static 'img/mail.png' %}' height='18px' alt='mail' />");
+                        document.write('</a>') ;
+                    </script>
+                </div>
+                <div class="col-md-2 col-md-offset-5 col-xs-3">
+                    <a href="http://www.univ-pau.fr">
+                        <img src="{% static 'img/logoUPPA.png' %}" alt="UPPA" class="img-responsive" />
+                    </a>
+                </div>
+                <div class="col-md-2 col-xs-3">
+                    <a href="http://iprem.univ-pau.fr">
+                        <img src="{% static 'img/logoIPREM.png' %}" alt="IPREM" class="img-responsive" />
+                    </a>
+                </div>
+            </div>
             <div class="pull-right">
-                <a href="http://www.univ-pau.fr"><img src="{% static 'img/logoUPPA.png' %}" height="64px" alt="UPPA" /></a>
-                <a href="http://iprem.univ-pau.fr"><img src="{% static 'img/logoIPREM.png' %}" height="64px" alt="IPREM" /></a>
             </div>
 
-            <script type=text/javascript>
-                var a = "germain";
-                var b = "univ-pau.fr";
-                var c = "subject=Contact";
-                document.write('<a href="mailto:' + a + '@' + b + ' ?' + c + '">');
-                document.write("<span class='glyphicon glyphicon-envelope' aria-hidden='true'></span>");
-                document.write(" <img src='{% static 'img/mail.png' %}' height='18px' alt='mail' />");
-                document.write('</a>') ;
-            </script>
+
 
             </a>
         </div>

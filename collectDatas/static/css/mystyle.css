@@ -1,4 +1,9 @@
-
 /*th, td, .datatable {
     border: 1px solid #ddd;
 }*/
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}

@@ -111,8 +111,8 @@ def plot_experiment(request, exp_id):
     data, ndatamax = gather_measures(exp)
 
     fig = plt.Figure()
-    ax = fig.add_subplot(111)
-    ax = plot.make_box_plot(ax, data)
+    #ax = fig.add_subplot(111)
+    fig = plot.make_hist_plot(fig, data)
 
     canvas = FigureCanvasAgg(fig)
     response = HttpResponse(content_type='image/png')
@@ -152,6 +152,23 @@ def download_exp_data(request, exp_id):
     response['Content-Disposition'] = 'attachment; filename="%s.csv"' % exp.name.replace(" ", "_")
 
     return response
+
+
+def load_csv():
+    csv = np.loadtxt("grid.csv", delimiter=",", skiprows=1, unpack=True)
+    with open("grid.csv", "r") as f:
+        heads = [h.strip() for h in f.readline().split(",")]
+
+    datas = dict()
+    for head, values in zip(heads, csv):
+        datas[head] = values
+
+    return datas
+
+
+#
+# Views about measure
+#
 
 
 def manage_measures(request, exp_id):
