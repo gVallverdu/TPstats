@@ -3,18 +3,11 @@
 {% block content %}
 
 <div class="page-header">
-    <h1>Login</h1>
-
-    <a href="{% url 'home' %}">
-        <button type="button" class="btn btn-default" aria-label="Home">
-            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-            Home
-        </button>
-    </a>
+    <h2>Login</h2>
 </div>
 
 <div class="alert alert-info" role="alert">
-<p>Only logged users are able to create and edit new experiment.</p>
+    <p>Only logged users are able to create and edit new experiment.</p>
 </div>
 
 {% if form.errors %}

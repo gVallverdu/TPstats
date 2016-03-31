@@ -1,5 +1,5 @@
 from django.conf.urls import url
-import django.contrib.auth.views as auth_views
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
@@ -20,5 +20,6 @@ urlpatterns = [
         views.new_measure, name="new_measure"),
     url(r'^measure/delete/(?P<measure_id>\d+)$', views.delete_measure, name="delete_measure"),
     # login
-    url(r'^accounts/login/$', auth_views.login, name="auth_login"),
+    url(r'^login/$', auth_views.login, name="login"),
+    url(r'^logout/$', auth_views.logout, {"next_page": "home"}, name="logout"),
 ]
