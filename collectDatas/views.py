@@ -55,6 +55,7 @@ def delete_experiment(request, exp_id):
     return redirect("collectDatas.views.home")
 
 
+@login_required
 def edit_experiment(request, exp_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     if request.method == "POST":
@@ -159,19 +160,6 @@ def download_exp_data(request, exp_id):
 
     return response
 
-
-def load_csv():
-    csv = np.loadtxt("grid.csv", delimiter=",", skiprows=1, unpack=True)
-    with open("grid.csv", "r") as f:
-        heads = [h.strip() for h in f.readline().split(",")]
-
-    datas = dict()
-    for head, values in zip(heads, csv):
-        datas[head] = values
-
-    return datas
-
-
 #
 # Views about measure
 #
@@ -210,6 +198,7 @@ def new_measure(request, exp_id, glass_id):
     return render(request, "collectDatas/new_measure.html", context)
 
 
+@login_required
 def delete_measure(request, measure_id):
     measure = get_object_or_404(models.Measure, pk=measure_id)
     exp_id = measure.experiment.id

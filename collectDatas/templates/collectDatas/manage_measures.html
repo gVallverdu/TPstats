@@ -25,31 +25,34 @@
                 </a>
         {% endfor %}
     </div>
+    
+    {% if user.is_authenticated %}
+        <h3>Remove measures :</h3>
 
-    <h3>Remove measures :</h3>
+        <div class="alert alert-danger" role="alert">
+        <p>WARNINGS : Click only on the values you want to delete. To see all measures,
+            <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
+                go back to the experiment page.
+            </a>
+        </div>
 
-    <div class="alert alert-danger" role="alert">
-    <p>WARNINGS : Click only on the values you want to delete. To see all measures,
-        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
-            go back to the experiment page.
-        </a>
-    </div>
+        <div class="row">
+            {% for glassware, measures in data.items %}
+                <div class="col-md-4">
+                    <h4>{{ glassware.get_glassware_display }}</h4>
 
-    <div class="row">
-        {% for glassware, measures in data.items %}
-            <div class="col-md-4">
-                <h4>{{ glassware.get_glassware_display }}</h4>
-
-                <div class="list-group">
-                    {% for measure in measures %}
-                        <a href="{% url 'delete_measure' measure_id=measure.pk %}" class="list-group-item">
-                            <span class="label label-danger pull-right">Delete</span>
-                            <span class="pull-right" style="padding-right:10px;"> {{ measure.measure_date }} </span>
-                            {{ measure.fmt_value }} mL
-                        </a>
-                    {% endfor %}
+                    <div class="list-group">
+                        {% for measure in measures %}
+                            <a href="{% url 'delete_measure' measure_id=measure.pk %}" class="list-group-item">
+                                <span class="label label-danger pull-right">Delete</span>
+                                <span class="pull-right" style="padding-right:10px;"> {{ measure.measure_date }} </span>
+                                {{ measure.fmt_value }} mL
+                            </a>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
-    </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
 {% endblock %}
