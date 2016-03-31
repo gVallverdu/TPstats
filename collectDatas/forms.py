@@ -24,7 +24,3 @@ class ExperimentForm(forms.ModelForm):
         labels = {
             "name": "Experiment name",
         }
-
-
-class ManageMeasuresForm(forms.Form):
-    pass

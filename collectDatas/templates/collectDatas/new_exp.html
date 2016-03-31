@@ -2,21 +2,14 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>Add a new experiment</h1>
-
-        <a href="{% url 'home' %}">
-            <button type="button" class="btn btn-default" aria-label="Home">
-                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                Home
-            </button>
-        </a>
         {% if exp %}
-        <a href="{% url 'detail_experiment' exp_id=exp.pk %}">
-            <button type="button" class="btn btn-default" aria-label="Remove">
-                <span class="glyphicon glyphicon-equalizer" aria-hidden="true"></span>
-                Data
-            </button>
-        </a>
+            <h2>Edit experiment : {{ exp.name }} <small>({{ exp.date }})</small></h2>
+            <a href="{% url 'detail_experiment' exp_id=exp.pk %}" role="button" class="btn btn-default" aria-label="Remove">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Back to data
+            </a>
+        {% else %}
+            <h2>Add a new experiment</h2>
         {% endif %}
     </div>
 

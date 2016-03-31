@@ -46,4 +46,4 @@ class Measure(models.Model):
         return "%6.2f" % self.value
 
     def __str__(self):
-        return "(%s , %s , %f)" % (str(self.experiment), str(self.glassware), self.value)
+        return str(self.experiment) + ", " + str(self.glassware) + ", " + self.fmt_value

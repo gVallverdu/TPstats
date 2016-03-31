@@ -1,7 +1,9 @@
+# shortcuts
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from django.views.generic import View
 from django.contrib.auth.decorators import login_required
+from django.forms import formset_factory
+
 from . import models
 from . import forms
 
@@ -11,8 +13,6 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_pdf import FigureCanvasPdf
 from . import plot
 # Create your views here.
-
-# shortcuts
 
 
 def gather_measures(exp):
@@ -184,17 +184,21 @@ def new_measure(request, exp_id, glass_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     glassware = get_object_or_404(models.Glassware, pk=glass_id)
 
+    MeasureFormSet = formset_factory(forms.MeasureForm, extra=5)
+
     if request.method == "POST":
-        form = forms.MeasureForm(request.POST)
-        if form.is_valid():
-            measure = form.save(commit=False)
-            measure.experiment = exp
-            measure.glassware = glassware
-            measure.save()
+        formset = MeasureFormSet(request.POST, request.FILES)
+        if formset.is_valid():
+            for form in formset:
+                if "value" in form.cleaned_data:
+                    measure = form.save(commit=False)
+                    measure.experiment = exp
+                    measure.glassware = glassware
+                    measure.save()
             return redirect("collectDatas.views.manage_measures", exp_id=exp_id)
     else:
-        form = forms.MeasureForm()
-    context = {"form": form, "exp": exp, "glassware": glassware}
+        formset = MeasureFormSet()
+    context = {"formset": formset, "exp": exp, "glassware": glassware}
     return render(request, "collectDatas/new_measure.html", context)
 
 

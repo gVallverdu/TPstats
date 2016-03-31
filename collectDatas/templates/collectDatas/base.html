@@ -39,19 +39,19 @@
                 your measurements over several groups or practical sessions.
             </small></h2>
 
-            <a href="{% url 'home' %}" class="btn btn-info" role="button">
+            <a href="{% url 'home' %}" class="btn btn-info" role="button" aria-label="Home">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                 Home
             </a>
 
             <div class="pull-right">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'logout' %}" class="btn btn-danger" aria-label="New Experiment">
+                    <a href="{% url 'logout' %}" role="button" class="btn btn-danger" aria-label="Logout">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                         Logout
                     </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="btn btn-success" aria-label="Login">
+                    <a href="{% url 'login' %}" role="button" class="btn btn-success" aria-label="Login">
                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                         Login
                     </a>
