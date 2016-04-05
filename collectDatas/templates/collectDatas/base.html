@@ -24,6 +24,9 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{% static 'collectDatas/css/mystyle.css' %}">
 
+    <!-- mathjax -->
+    <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
   </head>
   <body>
 
@@ -42,6 +45,10 @@
             <a href="{% url 'home' %}" class="btn btn-info" role="button" aria-label="Home">
                 <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                 Home
+            </a>
+            <a href="{% url 'notes' %}" class="btn btn-primary" role="button" aria-label="Lecture notes">
+                <span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
+                Notes
             </a>
 
             <div class="pull-right">

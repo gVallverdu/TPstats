@@ -22,4 +22,6 @@ urlpatterns = [
     # login
     url(r'^login/$', auth_views.login, name="login"),
     url(r'^logout/$', auth_views.logout, {"next_page": "home"}, name="logout"),
+    # lecture notes
+    url(r'^lecture_notes/$', views.notes, name='notes'),
 ]

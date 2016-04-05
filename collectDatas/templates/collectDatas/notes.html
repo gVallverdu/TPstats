@@ -1,0 +1,216 @@
+{% extends 'collectDatas/base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="page-header">
+    <h2>Short introduction to statistical representations</h2>
+</div>
+
+<p>
+    This page gives a short introduction to statistics and statistical representations
+    used in this web application.
+    The histogram plot, the box plot and the normal distribution are briefly
+    presented. The aim of this page is to gives few notions to be able to look
+    at the plot produced by the application. You are strongly encouraged to look
+    at the source at the bottom of this page.
+</p>
+
+<h2>You said histogram ?</h2>
+
+<div class="row" id="hist">
+    <div class="col-md-5">
+        <img src="{% static 'collectDatas/img/hist_plot.png' %}" alt="Histogram plot" class="img-responsive" />
+    </div>
+    <div class="col-md-7">
+        <p>A histogram is a graphical representation of the distribution of a
+        continuous variable. In order to plot an histogram from a set of N
+        measures you have to run over the following steps :</p>
+
+        <ol>
+            <li>Chose a range in order to plot your histogram.</li>
+            <li>Divide the interval into bins.</li>
+            <li>For each measure, identify in which bin they stand.</li>
+            <li>Count the number of measure in each bin.</li>
+            <li>Plot the number of measures in a bin as ordinates and the center
+            of the bins as abscissa.</li>
+        </ol>
+
+        <p>In this example, we asked students to measure a volume of 10 mL with a
+        beaker and plot the histogram of the measured volumes. The range is
+        between 6 and 12 mL with 12 bins. The histogram is normalized, that is
+        its integral is one. The table below, show the number of measures in
+        each bin and the normalized value used for the plot.</p>
+
+        <table class="table table-responsive">
+            <tr>
+                <th>bin (left side)</th>
+                <td>6.0</td>
+                <td>6.5</td>
+                <td>7.0</td>
+                <td>7.5</td>
+                <td>8.0</td>
+                <td>8.5</td>
+                <td>9.0</td>
+                <td>9.5</td>
+                <td>10.0</td>
+                <td>10.5</td>
+                <td>11.0</td>
+                <td>11.5</td>
+            </tr>
+            <tr>
+                <th># measure</th>
+                <td>0.</td>
+                <td>0.</td>
+                <td>2.</td>
+                <td>5.</td>
+                <td>7.</td>
+                <td>9.</td>
+                <td>17.</td>
+                <td>24.</td>
+                <td>12.</td>
+                <td>9.</td>
+                <td>4.</td>
+                <td>0.</td>
+            </tr>
+            <tr>
+                <th>Normalized</th>
+                <td>0.000</td>
+                <td>0.000</td>
+                <td>0.045</td>
+                <td>0.112</td>
+                <td>0.157</td>
+                <td>0.202</td>
+                <td>0.382</td>
+                <td>0.539</td>
+                <td>0.270</td>
+                <td>0.202</td>
+                <td>0.090</td>
+                <td>0.000</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<h2>Box plots</h2>
+
+<div class="row" id="box">
+    <div class="col-md-7">
+        <p>The opposite plot is called a <i>boxplot</i> and is usefull to take a
+        summarised view of the distribution of a data sample through their
+        quartiles. All the data are depicted on the left of the box plot, as
+        circles.</p>
+
+        <p>The quartiles divide the data in four equal groups with each group
+            containing a quarter of the data. After you have sorted your data
+            from the lowest to the highest the quartiles are defined as follow :</p>
+
+        <dl>
+            <dt>Median, or Q2</dt>
+            <dd>cut the data in two equal parts and is
+                defined as the number for which 50% of the data are lower and
+                50% are higher.</dd>
+            <dt>Q1</dt>
+            <dd>25% of the data belong between Q1 and the smallest value.</dd>
+            <dt>Q3</dt>
+            <dd>25% of the data belong between Q3 and the highest value. </dd>
+        </dl>
+
+        <p>As a consequence, 50% of the data belong between Q1 and Q3. This
+        interval is also called IQR for Interquartile range.</p>
+
+        <p>One adavantage of the quartiles and the boxplot is that they give a
+            summarized view of the distribution and allow to look at the
+            dissymmetry of the distribution depending on the position of the
+            quartiles.</p>
+
+        <p>The data used here are the same as the one used for the previous
+            histogram concerning the measures of the volume with a beaker.
+            The quartiles are:</p>
+
+        <table class="table">
+            <tr><th>Q1</th><th>median</th><th>Q3</th><th>IQR</th></tr>
+            <tr><td>8.98</td><td>9.66</td><td>10.06</td><td>1.08</td></tr>
+        </table>
+    </div>
+    <div class="col-md-5">
+        <img src="{% static 'collectDatas/img/box_plot.png' %}" alt="Box plot" class="img-responsive" />
+    </div>
+</div>
+
+<h2>The normal distribution</h2>
+<div class="row" id="normal">
+    <div class="col-md-5">
+        <img src="{% static 'collectDatas/img/hist_plot_normal.png' %}" alt="Histogram plot" class="img-responsive" />
+    </div>
+    <div class="col-md-7">
+        <p>The normal or gaussian distribution is hugely used in order to describe
+        the distribution of some data. The mathematical expression of the
+        distribution reads:
+
+        $$g(x, \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \, \exp\left( -\frac{(x - \mu)^2}{2\sigma^2}\right)$$
+
+        where \(\mu\) and \(\sigma\) are called the moments of the distribution
+        and stand for the mean and the standard deviation, respectively.
+        </p>
+
+        <p>The data used here are the same as the one used for the previous
+            histogram concerning the measures of the volume with a beaker.
+            The moments of the normal distributions are:</p>
+
+        <table class="table">
+            <tr><th>\(\mu\)</th><th>\(\sigma\)</th><th>\(2\sigma\)</th><th>\(6\sigma\)</th></tr>
+            <tr><td>9.53</td><td>0.92</td><td>1.85</td><td>5.55</td></tr>
+        </table>
+
+        <p>Considering a normal distribution, 68.27% of the data belong to the
+            intervall that is equal to \(2\sigma\) and center around the mean
+            \(\mu\).</p>
+
+        <p>Using a normal distribution is convenient because its expression is
+        simple and there is a lot of mathematical tools to work with normal
+        distribution.</p>
+
+    </div>
+</div>
+
+<h2>A skewed distribution</h2>
+<div class="row" id="skewed">
+    <div class="col-md-7">
+        <p>Skewed distribution are used in order to take into account the skewness
+        of a distribution. Here we used a normal distribution multiplied by
+        its cummulative density function. The whole skewed distribution reads </p>
+
+        $$s(x, \mu, \sigma, \alpha) = A \exp\left( -\frac{(x - \mu)^2}{2\sigma^2}\right) \left[1 + \text{erf}\left(\alpha \frac{x-\mu}{\sigma\sqrt{2}}\right)\right]$$
+
+        <p>Here, the parameter \(\alpha\) can be viewed as the skeweness of the
+        distribution.</p>
+
+        <p>The data used here are the same as the one used for the previous
+            histogram concerning the measures of the volume with a beaker.
+            The parameters of the skewed distribution are :</p>
+
+        <table class="table">
+            <tr><th>\(\mu\)</th><th>\(\sigma\)</th><th>\(\alpha\)</th></tr>
+            <tr><td>10.37</td><td>1.24</td><td>-1.73</td></tr>
+        </table>
+
+        <p>The parameters \(\mu\) and \(\sigma\) are slightly different than those
+        of the normal distribution. We got a negative skeweness of \(\alpha\)=-1.73
+        that means the distribution fall slowly for the smaller values than for the
+        higher ones. </p>
+
+    </div>
+    <div class="col-md-5">
+        <img src="{% static 'collectDatas/img/hist_plot_skewed.png' %}" alt="Histogram plot" class="img-responsive" />
+    </div>
+</div>
+
+<h2>References </h2>
+
+<ul>
+    <li>Normal distribution</li>
+    <li>Box plots</li>
+    <li></li>
+</ul>
+
+{% endblock %}

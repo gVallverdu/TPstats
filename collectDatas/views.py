@@ -36,6 +36,10 @@ def home(request):
     return render(request, 'collectDatas/home.html', {"exps": exps})
 
 
+def notes(request):
+    return render(request, 'collectDatas/notes.html')
+
+
 @login_required
 def new_experiment(request):
     if request.method == "POST":
@@ -120,7 +124,7 @@ def plot_experiment(request, exp_id, plottype="box"):
 
     canvas = FigureCanvasAgg(fig)
     response = HttpResponse(content_type='image/png')
-    canvas.print_png(response)
+    canvas.print_figure(response)
     return response
 
 
@@ -140,7 +144,7 @@ def download_plot_experiment(request, exp_id, plottype="box"):
     canvas = FigureCanvasPdf(fig)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="%s"' % filename
-    canvas.print_pdf(response)
+    canvas.print_figure(response)
     return response
 
 
