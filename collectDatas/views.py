@@ -217,7 +217,7 @@ def manage_measures(request, exp_id):
     return render(request, 'collectDatas/manage_measures.html', context)
 
 
-@new_measure
+@login_required
 def new_measure(request, exp_id, glass_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     glassware = get_object_or_404(models.Glassware, pk=glass_id)
