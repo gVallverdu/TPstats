@@ -174,11 +174,13 @@ def make_hist_plot(fig, data, nbins=10, target=10., ylabel="Volume (mL)"):
     ax2.set_xticklabels([])
     ax2.set_xlabel("Densities")
     ax2.set_ylim(minval, maxval)
+    ax2.grid(True)
 
     ax1.set_ylabel(ylabel)
     ax1.set_xlabel("Measures")
     ax1.set_xticklabels([])
     ax1.set_ylim(minval, maxval)
+    ax1.grid(True)
 
     ax2.legend(ncol=int(len(data) / 2 + 1), loc="upper right",
                bbox_to_anchor=(1, 1.12), fontsize=14)
