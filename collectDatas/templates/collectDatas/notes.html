@@ -10,9 +10,10 @@
     This page gives a short introduction to statistics and statistical representations
     used in this web application.
     The histogram plot, the box plot and the normal distribution are briefly
-    presented. The aim of this page is to gives few notions to be able to look
-    at the plot produced by the application. You are strongly encouraged to look
-    at the source at the bottom of this page.
+    presented. We aim at giving a few notion in order for you to be able to
+    understand the plots provided by the application.
+    You are strongly encouraged to look at the reference material at the bottom
+    of this page.
 </p>
 
 <h2>You said histogram ?</h2>
@@ -36,10 +37,10 @@
         </ol>
 
         <p>In this example, we asked students to measure a volume of 10 mL with a
-        beaker and plot the histogram of the measured volumes. The range is
+        beaker and plot the histogram of their measurements. The range is
         between 6 and 12 mL with 12 bins. The histogram is normalized, that is
-        its integral is one. The table below, show the number of measures in
-        each bin and the normalized value used for the plot.</p>
+        to say that its integral is one. The table below, show the number of
+        measures in each bin and the normalized value used for the plot.</p>
 
         <table class="table table-responsive">
             <tr>
@@ -150,7 +151,7 @@
         $$g(x, \mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}} \, \exp\left( -\frac{(x - \mu)^2}{2\sigma^2}\right)$$
 
         where \(\mu\) and \(\sigma\) are called the moments of the distribution
-        and stand for the mean and the standard deviation, respectively.
+        and stand for the average and the standard deviation, respectively.
         </p>
 
         <p>The data used here are the same as the one used for the previous
@@ -167,7 +168,7 @@
             \(\mu\).</p>
 
         <p>Using a normal distribution is convenient because its expression is
-        simple and there is a lot of mathematical tools to work with normal
+        simple and one can find mathematical tools to work with normal
         distribution.</p>
 
     </div>
@@ -182,8 +183,10 @@
 
         $$s(x, \mu, \sigma, \alpha) = A \exp\left( -\frac{(x - \mu)^2}{2\sigma^2}\right) \left[1 + \text{erf}\left(\alpha \frac{x-\mu}{\sigma\sqrt{2}}\right)\right]$$
 
-        <p>Here, the parameter \(\alpha\) can be viewed as the skeweness of the
-        distribution.</p>
+        <p>where <tt>erf</tt> is a function, called the error function
+        corresponding to the integral of a normal distribution between 0 and x.
+        The parameter \(\alpha\) can be viewed as the skeweness of the
+        distribution. It could be positive or negative.</p>
 
         <p>The data used here are the same as the one used for the previous
             histogram concerning the measures of the volume with a beaker.
@@ -195,9 +198,9 @@
         </table>
 
         <p>The parameters \(\mu\) and \(\sigma\) are slightly different than those
-        of the normal distribution. We got a negative skeweness of \(\alpha\)=-1.73
-        that means the distribution fall slowly for the smaller values than for the
-        higher ones. </p>
+        of the normal distribution. Here a negative skeweness of \(\alpha\) = -1.73
+        means that the distribution falls more slowly for the smaller values than
+        for the higher ones. </p>
 
     </div>
     <div class="col-md-5">

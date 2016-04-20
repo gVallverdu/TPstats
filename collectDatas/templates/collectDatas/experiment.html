@@ -23,7 +23,7 @@
         <div class="btn-group" role="group">
             <a href="{% url 'manage_measures' exp_id=exp.pk %}" role="button" class="btn btn-default" aria-label="Manage">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                Manage measures
+                add/delete measures
             </a>
             <a href="{% url 'download_exp_data' exp_id=exp.pk %}" role="button" class="btn btn-default" aria-label="Download">
                 <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
@@ -34,7 +34,7 @@
 
     <h3>Description :</h3>
 
-    <p>{{ exp.description }}</p>
+    <p>{{ exp.description|safe }}</p>
 
     <h3>Plots :</h3>
 
