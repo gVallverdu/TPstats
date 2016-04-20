@@ -32,14 +32,31 @@
         </div>
     </div>
 
-    <h3>Description :</h3>
+    <h3>Description of the experiment</h3>
 
-    <p>{{ exp.description|safe }}</p>
+    <p>{{ exp.description | safe }}</p>
 
-    <h3>Plots :</h3>
+    <h3>Statistic summary of the measurements</h3>
+
+    <p>The following table presents a statistic summary of all the measurements.</p>
+
+    {{ htmlstats | safe }}
+
+    <h3>Graphical representation of the measurements</h3>
+
+    <p>The following plots are graphical representations of the above statistical
+        informations. Concerning the histograms, the (s) label means that the
+        date are fitted by a skewed distribution and the (n) label means
+        that the data are fitted by a normal distribution. See
+        <a href="{% url 'notes' %}"> the notes page</a> for more informations.
+    </p>
+
+
 
     <div class="row">
         <div class="col-md-6">
+            <h4 class="text-center">Box plot</h4>
+
             <img src="{% url 'plot_experiment' exp_id=exp.pk plottype='box'%}" class="img-rounded img-responsive"/>
 
             <div class="btn-group btn-group-justified" role="group">
@@ -50,6 +67,8 @@
             </div>
         </div>
         <div class="col-md-6">
+            <h4 class="text-center">Histograms</h4>
+
             <img src="{% url 'plot_experiment' exp_id=exp.pk plottype='hist'%}" class="img-rounded img-responsive"/>
 
             <div class="btn-group btn-group-justified" role="group">
@@ -61,7 +80,10 @@
         </div>
     </div>
 
-    <h3>Measures :</h3>
+    <h3>Measures</h3>
+
+    <p>The following table shows all measurements. Click the add/remove measures
+    button, at the top of this page, to add or remove your measurements.</p>
 
     {{ htmldata | safe }}
 

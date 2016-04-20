@@ -72,6 +72,10 @@ def make_box_plot(ax, data, disp=0.05, shift=-.4):
         ax
     """
 
+    # look for the plot range
+    minval = np.floor(min([v for values in data.values() for v in values]))
+    maxval = np.ceil(max([v for values in data.values() for v in values]))
+
     # make the box plots
     bp = ax.boxplot(list(data.values()), sym="", patch_artist=True)
     for box, color in zip(bp["boxes"], COLOR_NAMES):
@@ -101,6 +105,7 @@ def make_box_plot(ax, data, disp=0.05, shift=-.4):
         ax.plot(x, list(measures), "o", color=TANGO_HTML_COLORS[color + "2"], label=label, alpha=.5)
 
     ax.set_xlim(0, ndata + .5)
+    ax.set_ylim(minval, maxval)
     ax.set_xticks(range(1, ndata + 1))
     ax.set_xticklabels(data.keys())
     ax.set_ylabel("Volume (mL)")
@@ -126,7 +131,7 @@ def make_hist_plot(fig, data, nbins=10, target=10., ylabel="Volume (mL)"):
     """
 
     # make a grid
-    gs = GridSpec(1, 2, width_ratios=[2, 1])
+    gs = GridSpec(1, 2, width_ratios=[1, 1])
     gs.update(wspace=0)
     ax1 = fig.add_subplot(gs[0])
     ax2 = fig.add_subplot(gs[1])
@@ -151,14 +156,14 @@ def make_hist_plot(fig, data, nbins=10, target=10., ylabel="Volume (mL)"):
                      linewidth=2,
                      alpha=.8,
                      color=TANGO_HTML_COLORS[color + "3"],
-                     label=key + " (skewed)")
+                     label=key + " (s)")
         except:
             popt, pcov = curve_fit(normpdf, xval, hval, p0=(mu, sigma))
             ax2.plot(normpdf(xfunc, *popt), xfunc,
                      linewidth=2,
                      alpha=.8,
                      color=TANGO_HTML_COLORS[color + "3"],
-                     label=key + " (normal)")
+                     label=key + " (n)")
 
         ax1.plot(data[key], "o", color=TANGO_HTML_COLORS[color + "3"], alpha=.75)
 

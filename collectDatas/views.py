@@ -8,6 +8,7 @@ from . import models
 from . import forms
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.backends.backend_pdf import FigureCanvasPdf
@@ -77,12 +78,25 @@ def detail_experiment(request, exp_id):
     exp = get_object_or_404(models.Experiment, pk=exp_id)
     data, ndatamax = gather_measures(exp)
 
-    # add needed values to have homogeneous lengths
+    # add needed values to have homogeneous lengths and compute statistic
+    stats = dict()
     for glassware, measures in data.items():
+        Q1, median, Q3 = np.percentile(measures, [25, 50, 75])
+        stats[glassware] = {
+            "count": len(measures),
+            "ave": np.mean(measures),
+            "std": np.std(measures),
+            "min": np.min(measures),
+            "max": np.max(measures),
+            "Q1": Q1,
+            "Q3": Q3,
+            "median": median
+        }
         measures += (ndatamax - len(measures)) * [0.]
         data[glassware] = measures
 
     # convert to html tab
+    htmldata = pd.DataFrame(data).to_html(float_format="%6.2f", index=False, classes="table")
     # htmldata = "<table class='table'>\n"
     # htmldata += "  <thead>\n"
     # htmldata += "    <tr>\n"
@@ -105,9 +119,27 @@ def detail_experiment(request, exp_id):
     # htmldata += "  </tbody>\n"
     # htmldata += "</table>\n"
 
-    htmldata = pd.DataFrame(data).to_html(float_format="%6.2f", index=False, classes="table")
+    # stat table
+    items = ["count", "ave", "std", "min", "Q1", "median", "Q3", "max"]
+    htmlstats = "<table class='table'>\n"
+    htmlstats += "  <thead>\n"
+    htmlstats += "    <tr>\n"
+    htmlstats += "      <td></td>\n"
+    for glassware in stats:
+        htmlstats += "    <th>%s</th>\n" % glassware
+    htmlstats += "    </tr>\n"
+    htmlstats += "  </thead>\n"
+    htmlstats += "  <tbody>\n"
+    for item in items:
+        htmlstats += "    <tr>\n"
+        htmlstats += "      <th>%s</th>\n" % item
+        for glassware in stats:
+            htmlstats += "      <td>%6.2f</td>\n" % stats[glassware][item]
+        htmlstats += "    </tr>\n"
+    htmlstats += "  </tbody>\n"
+    htmlstats += "</table>\n"
 
-    context = {"exp": exp, "htmldata": htmldata}
+    context = {"exp": exp, "htmldata": htmldata, "htmlstats": htmlstats}
     return render(request, 'collectDatas/experiment.html', context)
 
 
