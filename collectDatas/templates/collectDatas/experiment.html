@@ -21,10 +21,12 @@
 
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group" role="group">
+            {% if user.is_authenticated %}
             <a href="{% url 'manage_measures' exp_id=exp.pk %}" role="button" class="btn btn-default" aria-label="Manage">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 add/delete measures
             </a>
+            {% endif %}
             <a href="{% url 'download_exp_data' exp_id=exp.pk %}" role="button" class="btn btn-default" aria-label="Download">
                 <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
                 Download data in CSV format
